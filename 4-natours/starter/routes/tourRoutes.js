@@ -1,5 +1,5 @@
 const express = require('express');
-const tourController = require('./../controllers/tourController'); // could also use destructuring
+const tourController = require('../controllers/tourController'); // could also use destructuring
 
 const router = express.Router();
 

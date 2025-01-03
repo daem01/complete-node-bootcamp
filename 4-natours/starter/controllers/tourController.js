@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
+  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`),
 );
 
 exports.checkID = (req, res, next, value) => {
@@ -53,21 +53,22 @@ exports.getTour = (req, res) => {
 
 exports.createTour = (req, res) => {
   const newID = tours.at(-1).id + 1;
-  const newTour = Object.assign({ id: newID }, req.body);
+  // eslint-disable-next-line node/no-unsupported-features/es-syntax
+  const newTour = { id: newID, ...req.body };
 
   tours.push(newTour);
 
   fs.writeFile(
     `${__dirname}/dev-data/data/tours-simple.json`,
     JSON.stringify(tours),
-    err => {
+    () => {
       res.status(201).json({
         status: 'success',
         data: {
           tour: newTour,
         },
       });
-    }
+    },
   );
 };
 
