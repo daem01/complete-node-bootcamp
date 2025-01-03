@@ -1,85 +1,33 @@
-const fs = require('fs');
 const express = require('express');
+const morgan = require('morgan');
+
+const tourRouter = require('./routes/tourRoutes');
+const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
+//// MIDDLEWARES
+// Third party middleware
+app.use(morgan('dev'));
 app.use(express.json());
 
-// Route handler
-// app.get('/', (req, res) => {
-//   res
-//     .status(200)
-//     .json({ message: 'Hello from the server side!', app: 'Natours' });
-// });
+app.use(express.static(`${__dirname}/public`));
 
-// app.post('/', (req, res) => {
-//   res.send('You can post to this endpoint...');
-// });
-
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
-);
-
-// Handling GET Requests
-app.get('/api/v1/tours', (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    results: tours.length,
-    data: {
-      // tours: tours, // If key and value are the same, you only have to type it once
-      tours,
-    },
-  });
+// Creating our own middleware
+app.use((req, res, next) => {
+  console.log('Hello from the middleware 🥳');
+  next();
 });
 
-// URL Parameters
-app.get('/api/v1/tours/:id', (req, res) => {
-  console.log(req.params);
-  const id = +req.params.id;
-
-  const tour = tours.find(el => el.id === id);
-
-  // if (id > tours.length) {
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-  }
-  // const tour = tours.find(el => el.id === id);
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour,
-    },
-  });
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
 });
 
-// Handling POST Requests
-app.post('/api/v1/tours', (req, res) => {
-  // console.log(req.body);
+//// ROUTES
+// Mounting router
+app.use('/api/v1/tours', tourRouter); // almost like creating small sub app for individual resource, hence why tourRoute.route(/) points to root /api/v1/tours/
+app.use('/api/v1/users', userRouter);
 
-  const newID = tours.at(-1).id + 1;
-  const newTour = Object.assign({ id: newID }, req.body);
-
-  tours.push(newTour);
-
-  fs.writeFile(
-    `${__dirname}/dev-data/data/tours-simple.json`,
-    JSON.stringify(tours),
-    err => {
-      res.status(201).json({
-        status: 'success',
-        data: {
-          tour: newTour,
-        },
-      });
-    }
-  );
-});
-
-const port = 3000;
-app.listen(port, () => {
-  console.log(`App running on http://localhost:${3000}`);
-});
+// START SERVER
+module.exports = app;
