@@ -4,7 +4,7 @@
   "description": "Learning node, express, and mongoDB",
   "main": "app.js",
   "scripts": {
-    "start:dev": "SET NODE_ENV=development&&nodemon server.js",
+    "start": "SET NODE_ENV=development&&nodemon server.js",
     "start:prod": "SET NODE_ENV=production&&nodemon server.js"
   },
   "author": "Doug Moser",
@@ -26,5 +26,8 @@
     "eslint-plugin-react": "^7.37.3",
     "nodemon": "^3.1.9",
     "prettier": "^3.4.2"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
