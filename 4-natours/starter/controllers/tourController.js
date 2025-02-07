@@ -1,21 +1,6 @@
 const Tour = require('../models/tourModels');
 const APIFeatures = require('../utils/apiFeatures');
 
-// const tours = JSON.parse(
-//   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`),
-// );
-
-// Challenge
-// exports.checkRequestBody = (req, res, next) => {
-//   if (!req.body.name || !req.body.price)
-//     return res.status(400).json({
-//       status: 'fail',
-//       message: 'Bad request... Missing name or price',
-//     });
-//
-//   next();
-// };
-
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
   req.query.sort = '-ratingsAverage, price';
@@ -32,8 +17,6 @@ exports.getAllTours = async (req, res) => {
       .limitFields()
       .paginate();
     const tours = await features.query;
-    // after the 4 steps above
-    // query.sort().select().skip().limit()
 
     // Send Response
     res.status(200).json({

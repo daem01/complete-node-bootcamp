@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "SET NODE_ENV=development&&nodemon server.js",
-    "start:prod": "SET NODE_ENV=production&&nodemon server.js"
+    "start:prod": "SET NODE_ENV=production&&nodemon server.js",
+    "debug": "ndb server.js"
   },
   "author": "Doug Moser",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.3",
+    "ndb": "^1.1.5",
     "nodemon": "^3.1.9",
     "prettier": "^3.4.2"
   },

@@ -1,8 +1,15 @@
+.idea
 1-node-farm/starter/node_modules
+4-natours/starter/.idea
 4-natours/starter/node_modules
 4-natours/starter/config.env
 4-natours/starter-after-section-6/node_modules.env
 4-natours/starter-after-section-6/config.env
+4-natours/starter-after-section-8-mongo-mongoose/.idea
 4-natours/starter-after-section-8-mongo-mongoose/node_modules
 4-natours/starter-after-section-8-mongo-mongoose/config.env
-.idea
+
+# Course Files
+theory-lectures.pdf
+vscode-setup.md
+README.md
